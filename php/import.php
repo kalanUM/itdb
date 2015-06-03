@@ -409,7 +409,7 @@ if ($nextstep==2) {
             'rackmountable'=>$rackmountable,
             'itemtypeid'=>$itemtypeid,
             'status'=>$status,
-            'locationid'=>$locationid,
+            'locationid'=>$locid,
             'locareaid'=>$locareaid,
             'label'=>$label,
             'function'=>$function,
