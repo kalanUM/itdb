@@ -387,14 +387,15 @@ if ($nextstep==2) {
 		$function=$cols[$name2fno['function']];
 		$cpu=$cols[$name2fno['cpu']];
 		$ram=$cols[$name2fno['ram']];
+		$hd=$cols[$name2fno['hd']];
 
 
 
 
 		$sql="INSERT into items ".
-             "(userid,ipv4,dnsname,comments,manufacturerid,model,sn,ispart,rackmountable,itemtypeid,status,locationid,locareaid,label,function) ".
+             "(userid,ipv4,dnsname,comments,manufacturerid,model,sn,ispart,rackmountable,itemtypeid,status,locationid,locareaid,label,function,cpu,ram,hd) ".
              " VALUES ".
-             "(:userid,:ipv4,:dnsname,:comments,:manufacturerid,:model,:sn,:ispart,:rackmountable,:itemtypeid,:status,:locationid,:locareaid,:label,:function)";
+             "(:userid,:ipv4,:dnsname,:comments,:manufacturerid,:model,:sn,:ispart,:rackmountable,:itemtypeid,:status,:locationid,:locareaid,:label,:function,:cpu,:ram,:hd)";
 
         $stmt=db_execute2($dbh,$sql,
             array(
@@ -413,6 +414,9 @@ if ($nextstep==2) {
             'locareaid'=>$locareaid,
             'label'=>$label,
             'function'=>$function,
+			'cpu'=>$cpu,
+			'ram'=>$ram,
+			'hd'=>$hd,
             )
         );
 		 //echo "<br>Isql=$sql<br>";
