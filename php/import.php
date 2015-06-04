@@ -97,7 +97,7 @@ Expected format is CSV file with the following fields:<br>
     $sep="";
     foreach ($fno2name as $name) {
         echo $sep.ucfirst($name);
-        $sep=",";
+        $sep=", ";
     }
     ?>
     </big>
