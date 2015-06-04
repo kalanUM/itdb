@@ -18,7 +18,7 @@ $fno2name=array(
 /*0*/    'label',
 /*1*/    'location',
 /*2*/    'area',
-/*3*/    'owner',
+/*3*/    'username',
 /*4*/    'status',
 /*5*/    'dnsname',
 /*6*/    'ipv4',
@@ -151,10 +151,10 @@ Expected format is CSV file with the following fields:<br>
         //echo "HERE:\n"; print_r($hwman_new); echo "col:<br>\n"; print_r($cols); echo "<br>";
 
 		//users
-		if (getuserbyname($cols[$name2fno['owner']])>=0) 
-			$user_old[]=trim($cols[$name2fno['owner']]);
-		elseif (strlen(trim($cols[$name2fno['owner']])))
-			$user_new[]=trim($cols[$name2fno['owner']]);
+		if (getuserbyname($cols[$name2fno['username']])>=0) 
+			$user_old[]=trim($cols[$name2fno['username']]);
+		elseif (strlen(trim($cols[$name2fno['username']])))
+			$user_new[]=trim($cols[$name2fno['username']]);
 
 		//itemtypes
 		if (getitemtypeidbyname($cols[$name2fno['itemtype']])>=0) 
@@ -275,10 +275,10 @@ if ($nextstep==2) {
 			$hwman_new[]=trim($cols[$name2fno['manufacturer']]);
 
 		//users
-		if (getuserbyname($cols[$name2fno['owner']])!=-1) 
-			$user_old[]=trim($cols[$name2fno['owner']]);
+		if (getuserbyname($cols[$name2fno['username']])!=-1) 
+			$user_old[]=trim($cols[$name2fno['username']]);
 		else 
-			$user_new[]=trim($cols[$name2fno['owner']]);
+			$user_new[]=trim($cols[$name2fno['username']]);
 
 
 		//itemtypes
@@ -372,7 +372,7 @@ if ($nextstep==2) {
 		}
 		//echo "<br>LR:{$cols[0]},{$cols[1]}=";print_r($lr); echo "<br>";
 
-		$userid=getuseridbyname($cols[$name2fno['owner']]);
+		$userid=getuseridbyname($cols[$name2fno['username']]);
 		$ipv4=trim($cols[$name2fno['ipv4']]);
 		$dnsname=trim($cols[$name2fno['dnsname']]);
 		$comments=$cols[$name2fno['comments']];
