@@ -31,6 +31,8 @@ $fno2name=array(
 /*13*/   'cpu',
 /*14*/   'ram',
 /*15*/   'hd',
+/*16*/   'cpuno',
+/*17*/	 'remadmip',
 );
 
 $name2fno=array_flip($fno2name);
@@ -388,14 +390,16 @@ if ($nextstep==2) {
 		$cpu=$cols[$name2fno['cpu']];
 		$ram=$cols[$name2fno['ram']];
 		$hd=$cols[$name2fno['hd']];
+		$cpuno=intval($cols[$name2fno['cpuno']]);
+		$remadmip=$cols[$name2fno['remadmip']];
 
 
 
 
 		$sql="INSERT into items ".
-             "(userid,ipv4,dnsname,comments,manufacturerid,model,sn,ispart,rackmountable,itemtypeid,status,locationid,locareaid,label,function,cpu,ram,hd) ".
+             "(userid,ipv4,dnsname,comments,manufacturerid,model,sn,ispart,rackmountable,itemtypeid,status,locationid,locareaid,label,function,cpu,ram,hd,cpuno,remadmip) ".
              " VALUES ".
-             "(:userid,:ipv4,:dnsname,:comments,:manufacturerid,:model,:sn,:ispart,:rackmountable,:itemtypeid,:status,:locationid,:locareaid,:label,:function,:cpu,:ram,:hd)";
+             "(:userid,:ipv4,:dnsname,:comments,:manufacturerid,:model,:sn,:ispart,:rackmountable,:itemtypeid,:status,:locationid,:locareaid,:label,:function,:cpu,:ram,:hd,:cpuno,:remadmip)";
 
         $stmt=db_execute2($dbh,$sql,
             array(
@@ -417,6 +421,8 @@ if ($nextstep==2) {
 			'cpu'=>$cpu,
 			'ram'=>$ram,
 			'hd'=>$hd,
+			'cpuno'=>$cpuno,
+			'remadmip'=>$remadmip,
             )
         );
 		 //echo "<br>Isql=$sql<br>";
