@@ -505,7 +505,7 @@ else if ($action=="edititem") {
 	  <select name='cpuno'>
 	  <option value='0'><?php te("Select");?></option>
 	<?php 
-	for ($i=1;$i<=20;$i++) {
+	for ($i=1;$i<=64;$i++) {
 	  $s="";
 	  if ($cpuno=="$i") $s=" SELECTED ";
 	  echo "<option $s value='$i'>$i</option>\n";
@@ -519,7 +519,7 @@ else if ($action=="edititem") {
 	    <select name='corespercpu'>
 	    <option value='0'><?php te("Select Cores/CPU");?></option>
 	  <?php 
-	  for ($i=1;$i<=20;$i++) {
+	  for ($i=1;$i<=32;$i++) {
 	    $s="";
 	    if ($corespercpu=="$i") $s=" SELECTED ";
 	    echo "<option $s value='$i'>$i</option>\n";
