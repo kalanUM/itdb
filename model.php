@@ -619,4 +619,45 @@ function dbversion() {
   $ver=$r['dbversion'];
   return $ver;
 }
+
+// used in modified import.php
+function getrackidbyname ($name) {
+  global $dbh;
+
+     $name=trim(strtolower($name));
+     if (!strlen($name))
+          return -1;
+     $sql="SELECT id FROM racks WHERE LOWER(label) ='$name' ";
+     
+     $sth=db_execute($dbh,$sql);
+     $r=$sth->fetch(PDO::FETCH_ASSOC);
+     $sth->closeCursor();
+
+     if (!count($r['id'])) 
+          return -1;
+     else 
+          return $r['id'];
+}
+
+// used in modified import.php
+function getrackarraybyname ($name) {
+  //return array example    Array ( [id] => 1 [name] => H5 [area] => Row H [loc] => Building )  
+  global $dbh;
+
+     $name=trim(strtolower($name));
+     if (!strlen($name))
+          return array(-1,-1,-1,-1);
+     $sql="SELECT racks.id as id, racks.label as name, locareas.areaname as area, locations.name as loc FROM racks,locareas,locations ".
+          " WHERE LOWER(racks.label) ='$name' AND ".
+          " racks.locareaid = locareas.id AND ".
+          " locareas.locationid = locations.id " ;     
+     $sth=db_execute($dbh,$sql);
+     $r=$sth->fetch(PDO::FETCH_ASSOC);
+     $sth->closeCursor();
+
+     if (!count($r['id'])) 
+          return array(-1,-1,-1,-1);
+     else 
+          return $r;
+}
 ?>

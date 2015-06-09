@@ -33,6 +33,7 @@ $fno2name=array(
 /*15*/   'hd',
 /*16*/   'cpuno',
 /*17*/	 'remadmip',
+/*18 - lookup*/ 'rack',
 );
 
 $name2fno=array_flip($fno2name);
@@ -112,7 +113,8 @@ Expected format is CSV file with the following fields:<br>
 	$imlines=file($imfn);
 ?>
 
-	<br><h2> Please check fields for consistency before submiting</h2>
+	<br><h2> Please check fields for consistency before submitting.</h2>
+    <h2>Existing racks will import with DB information.  New racks will import with generic stats.</h2>
 	<div style='height:400px;overflow:auto'>
 	<table class='brdr sortable'>
 	<thead>
@@ -178,6 +180,21 @@ Expected format is CSV file with the following fields:<br>
 			$loc_new[]=array('loc'=>trim($cols[$name2fno['location']]),'area'=>($cols[$name2fno['area']])); 
 			$loc_new2[]=trim($cols[$name2fno['location']].":".$cols[$name2fno['area']]);
 		}
+		
+	    //racks
+        $rcheck=getrackarraybyname($cols[$name2fno['rack']]);
+        //return array example    Array ( [id] => 1 [name] => H5 [area] => Row H [loc] => Ungar ) 
+        if ($rcheck[0]>=0) {
+            //rack exists - rack will import with existing area and location regardless of these values
+            $rack_exists[]=trim($cols[$name2fno['rack']]." - ".$cols[$name2fno['area']]." - ".$cols[$name2fno['location']]);
+            $rack_old[]=implode(' - ', $rcheck);
+            //$rack_old[]=trim($rcheck[id]." (id): ".$rcheck[name]." (name): ".$rcheck[area]." (area): ".$rcheck[loc]." (loc)");
+        }
+        else {
+            //rack does not exist - store area and location names for id lookup after location/locarea insert
+            $rack_new[]=array('rack'=>trim($cols[$name2fno['rack']]), 'area'=>trim($cols[$name2fno['area']]), 'loc'=>trim($cols[$name2fno['location']]));
+            $rack_new2[]=trim($cols[$name2fno['rack']]." : ".$cols[$name2fno['area']]." : ".$cols[$name2fno['location']]);
+        }
 
 	}
 
@@ -238,6 +255,39 @@ Expected format is CSV file with the following fields:<br>
 		}
 		?>
 		</div>
+		
+        <div style='border:1px solid #ccc;width:200px;height:200px;overflow:auto; text-align:left;float:left;margin-left:20px;'>
+        <b>New Racks (will be inserted into the DB):</b><br>
+        <hr>
+        <?php
+        $rack_new2=array_iunique($rack_new2,SORT_STRING);
+        foreach ($rack_new2 as $racknew) {
+             echo "$racknew<br>\n";
+        }
+        ?>
+        </div>
+        
+        <div style='border:1px solid #ccc;width:200px;height:200px;overflow:auto; text-align:left;float:left;margin-left:20px;'>
+        <b>Existing Racks (from DB):</b><br>
+        <hr>
+        <?php
+        $rack_old=array_iunique($rack_old,SORT_STRING);
+        foreach ($rack_old as $rackid) {
+             echo "$rackid<br>\n";
+        }
+        ?>
+        </div>     
+        
+        <div style='border:1px solid #ccc;width:200px;height:200px;overflow:auto; text-align:left;float:left;margin-left:20px;'>
+        <b>Existing Racks (import sheet):</b><br>
+        <hr>
+        <?php
+        $rack_exists=array_iunique($rack_exists,SORT_STRING);
+        foreach ($rack_exists as $racks) {
+             echo "$racks<br>\n";
+        }
+        ?>
+        </div>     
 	</div>
 
 	<div style='clear:both;text-align:center:width:100%; '>
@@ -302,6 +352,18 @@ if ($nextstep==2) {
 			$loc_old[]=trim($cols[$name2fno['location']]." - ".$cols[$name2fno['area']]);
 		else 
 			$loc_new[]=array('loc'=>trim($cols[$name2fno['location']]),'area'=>($cols[$name2fno['area']])); 
+		
+        //racks
+        $rcheck=getrackarraybyname($cols[$name2fno['rack']]);
+        //return array example    Array ( [id] => 1 [name] => H5 [area] => Row H [loc] => Building ) 
+        if ($rcheck[0]>=0) {
+            //rack exists - rack will import with existing area and location
+            $rack_old[]=implode(' - ', $rcheck);
+        }
+        else {
+            //rack does not exist - store area and location ids for insert
+            $rack_new[]=array('label'=>trim($cols[$name2fno['rack']]), 'areaid'=>trim($lr['locareaid']), 'locid'=>trim($lr['locid']));
+        }
 	}
 
 
@@ -331,7 +393,7 @@ if ($nextstep==2) {
         $stmt=db_execute2($dbh,$sql,array('itype'=>$itype));
 	}
 
-	//addlocations/locareas
+	//add locations/locareas
 	foreach ($loc_new as $loca) {
 		$location=$loca['loc'];
 		$locarea=$loca['area'];
@@ -349,6 +411,19 @@ if ($nextstep==2) {
 		}
 	}
 
+    //add racks
+    $rack_new=array_iunique($rack_new,SORT_STRING);
+    
+    foreach ($rack_new as $rack) {
+        $rlabel=$rack['label'];
+        $rlocareaid=$rack['areaid'];
+        $rlocid=$rack['locid'];
+        
+        //insert rack with generic stats
+        $sql="INSERT INTO racks (label, locationid, locareaid, usize, model, depth) ".
+        "values (:rlabel, :rlocationid, :rlocareaid, 50, 'Cabinet', 1000) ";
+        $stmt=db_execute2($dbh,$sql,array('rlabel'=>$rlabel,'rlocationid'=>$rlocid, 'rlocareaid'=>$rlocareaid));
+    }
 
 	//add items
 	foreach ($imlines as $line_num => $item) {
