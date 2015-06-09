@@ -467,14 +467,15 @@ if ($nextstep==2) {
 		$hd=$cols[$name2fno['hd']];
 		$cpuno=intval($cols[$name2fno['cpuno']]);
 		$remadmip=$cols[$name2fno['remadmip']];
+        $rackid=getrackidbyname($cols[$name2fno['rack']]);
 
 
 
 
 		$sql="INSERT into items ".
-             "(userid,ipv4,dnsname,comments,manufacturerid,model,sn,ispart,rackmountable,itemtypeid,status,locationid,locareaid,label,function,cpu,ram,hd,cpuno,remadmip) ".
+             "(userid,ipv4,dnsname,comments,manufacturerid,model,sn,ispart,rackmountable,itemtypeid,status,locationid,locareaid,label,function,cpu,ram,hd,cpuno,remadmip,rackid) ".
              " VALUES ".
-             "(:userid,:ipv4,:dnsname,:comments,:manufacturerid,:model,:sn,:ispart,:rackmountable,:itemtypeid,:status,:locationid,:locareaid,:label,:function,:cpu,:ram,:hd,:cpuno,:remadmip)";
+             "(:userid,:ipv4,:dnsname,:comments,:manufacturerid,:model,:sn,:ispart,:rackmountable,:itemtypeid,:status,:locationid,:locareaid,:label,:function,:cpu,:ram,:hd,:cpuno,:remadmip,:rackid)";
 
         $stmt=db_execute2($dbh,$sql,
             array(
@@ -498,6 +499,7 @@ if ($nextstep==2) {
 			'hd'=>$hd,
 			'cpuno'=>$cpuno,
 			'remadmip'=>$remadmip,
+			'rackid'=>$rackid,
             )
         );
 		 //echo "<br>Isql=$sql<br>";
