@@ -264,6 +264,7 @@ else if ($action=="edititem") {
 
       <tr> <td class='tdt'><?php te("S/N");?>:</td><td><input type=text value='<?php echo $sn?>' name='sn'></td> </tr>
       <tr> <td class='tdt'><?php te("S/N 2");?>:</td><td><input type=text value='<?php echo $sn2?>' name='sn2'></td> </tr>
+	  <tr> <td class='tdt'><?php te("UM Decal");?>:</td><td><input type=text value='<?php echo $umdecal?>' name='umdecal'></td> </tr>
       <tr>
 
     <?php 
@@ -497,6 +498,7 @@ else if ($action=="edititem") {
       <tr><td class="tdt"><?php te("Warranty Info");?>:</td> <td><input  size=12 type=text name='warrinfo' value="<?php echo $warrinfo?>"></td></tr>
       <tr><tr><td colspan=2 style='padding-top:10px'><h3>Misc</h3></td> </tr>
       <tr><td class='tdt'><?php te("HDs (TB)");?></td><td  title='Comma separated. E.g. Enter "2, 0.6" for 1x2T+1x600G'><input type=text size=15 value='<?php echo $hd?>' name='hd'></td> </tr>
+	  <tr><td class='tdt'><?php te("HD type(s)");?></td><td  title='Comma separated. E.g. Enter "SAS, SAS" for 2xSAS HDs'><input type=text size=15 value='<?php echo $hdtypes?>' name='hdtypes'></td> </tr>
       <tr><td class='tdt' class='tdt'><?php te("RAM (GB)");?>:</td><td><input type=text size=15 value='<?php echo $ram?>' name='ram'></td> </tr>
       <tr><td class='tdt' class='tdt'><?php te("CPU Model");?>:</td><td title='e.g. Intel E5450'><input type=text size=15 value='<?php echo $cpu?>' name='cpu'></td> </tr>
 
@@ -539,6 +541,9 @@ else if ($action=="edititem") {
       <tr> <td class='tdt'>IPv4:</td><td><input type=text size=15 value='<?php echo $ipv4?>' name='ipv4'></td> </tr>
       <tr> <td class='tdt'>IPv6:</td><td><input type=text size=15 value='<?php echo $ipv6?>' name='ipv6'></td> </tr>
       <tr> <td class='tdt'>Rem.Adm.IP:</td><td title='<?php te("Remote Administration IP");?>'><input type=text size=15 value='<?php echo $remadmip?>' name='remadmip'></td> </tr>
+      <tr> <td class='tdt'>Public IP:</td><td title='<?php te("Public IP");?>'><input type=text size=15 value='<?php echo $pubip?>' name='pubip'></td> </tr>
+      <tr> <td class='tdt'>Login:</td><td title='<?php te("Admin Login");?>'><input type=text size=15 value='<?php echo $admlogin?>' name='admlogin'></td> </tr>
+      <tr> <td class='tdt'>LoginSC:</td><td title='<?php te("Service Console Login");?>'><input type=text size=15 value='<?php echo $admloginsc?>' name='admloginsc'></td> </tr>
       <tr> <td class='tdt'><?php te("Ptch.PnlPrt");?>:</td><td title='<?php te("Patch Panel Port");?>'><input type=text size=15 value='<?php echo $panelport?>' name='panelport'></td> </tr>
 
       <tr>

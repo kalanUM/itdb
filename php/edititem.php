@@ -5,11 +5,11 @@ if (!isset($initok)) {echo "do not run this script directly";exit;}
 
 //form variables
 $formvars=array("itemtypeid","function","manufacturerid","label",
-  "warrinfo","model","sn","sn2","sn3","locationid","locareaid",
-  "origin","warrantymonths","purchasedate","purchprice","dnsname","userid",
-  "comments","maintenanceinfo","ispart","hd",
+  "warrinfo","model","sn","sn2","sn3","umdecal","locationid","locareaid",
+  "origin","warrantymonths","purchasedate","purchprice","dnsname","userid","owner","extadm",
+  "comments","maintenanceinfo","ispart","hd","hdtypes",
   "cpu","cpuno","corespercpu", "ram", "rackmountable", "rackid","rackposition","rackposdepth","usize","status",
-  "macs","ipv4","ipv6","remadmip","panelport","switchid","switchport","ports");
+  "macs","ipv4","ipv6","remadmip","pubip","admlogin","admloginsc","panelport","switchid","switchport","ports");
 
 /* delete item */
 if (isset($_GET['delid'])) { 
@@ -239,18 +239,18 @@ elseif (isset($_POST['itemtypeid']) && ($_GET['id']=="new")&&isvalidfrm()) {
 
   //// STORE DATA
   $sql="INSERT into items (label, itemtypeid, function, manufacturerid, ".
-  " warrinfo, model, sn, sn2, sn3, origin, warrantymonths, purchasedate, purchprice, ".
-  " dnsname, userid, locationid,locareaid, maintenanceinfo,  ".
+  " warrinfo, model, sn, sn2, sn3, umdecal, origin, warrantymonths, purchasedate, purchprice, ".
+  " dnsname, userid, owner, extadm, locationid,locareaid, maintenanceinfo,  ".
   " comments,ispart, rackid, rackposition,rackposdepth, rackmountable, ".
-  " usize, status, macs, ipv4, ipv6, remadmip, ".
+  " usize, status, macs, ipv4, ipv6, remadmip, pubip, admlogin, admloginsc, ".
   " hd, cpu,cpuno,corespercpu, ram, ".
   " panelport, switchid, switchport, ports) VALUES ".
   " ('$label', '$itemtypeid', '$function', '$manufacturerid', ".
-  " '$warrinfo', '$model', '$sn', '$sn2', '$sn3', '$origin', ".
+  " '$warrinfo', '$model', '$sn', '$sn2', '$sn3', '$umdecal', '$origin', ".
   "  $warrantymonths, '$purchasedate2', ".
-  " '$purchprice', '$dnsname', $userid, $locationid,$locareaid, '$maintenanceinfo', ".
+  " '$purchprice', '$dnsname', $userid, '$owner', '$extadm', $locationid,$locareaid, '$maintenanceinfo', ".
   " '". htmlspecialchars($comments,ENT_QUOTES,'UTF-8')  ."',$ispart, $rackid, $rackposition,$rackposdepth, $rackmountable, " .
-  "  $usize, $status, '$macs', '$ipv4', '$ipv6', '$remadmip', ".
+  "  $usize, $status, '$macs', '$ipv4', '$ipv6', '$remadmip', '$pubip', '$admlogin', '$admloginsc', ".
   " '$hd', '$cpu', '$cpuno', '$corespercpu', '$ram', ".
   " '$panelport', $switchid,  '$switchport', '$ports' ) ";
 

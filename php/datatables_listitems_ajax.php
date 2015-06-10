@@ -9,9 +9,9 @@
 	/* Array of database columns which should be read and sent back to DataTables. Use a space where
 	 * you want to insert a non-database field (for example a counter or static image)
 	 */
-	$aColumns = array('itemid','itemlabel','typedesc','title','itemmodel','dnsname','serial','purchasedate',
-	'remdays','username','statusdesc','locationname','areaname','rackinfo','purchprice','macs','ipv4','ipv6',
-	'remadmip','taginfo','softinfo');
+	$aColumns = array('itemid','itemlabel','typedesc','title','itemmodel','dnsname','serial','umdecal','ipv4','purchasedate',
+	'remdays','username','owner','extadm','statusdesc','locationname','areaname','rackinfo','purchprice','macs','ipv6',
+	'remadmip','admlogin','admloginsc','pubip','taginfo','softinfo');
 	
 	include( '../init.php');
 
@@ -124,16 +124,22 @@
 	      //$sQueryCnt = "SELECT count($sIndexColumn) as count FROM $sTable $sWhere";
 	      $sQueryCnt = "
 		  SELECT count(items.id) as count ,
-		  items.id AS itemid,
-		  items.model AS itemmodel,
-		  items.label AS itemlabel,
+				  items.id AS itemid,
+				  items.model AS itemmodel,
+				  items.label AS itemlabel,
                   locations.name as locationname,
                   coalesce(sn,'') || ' ' || coalesce(sn2,'') || ' ' || coalesce(sn3,'') AS serial,
+				  items.umdecal AS umdecal,
+				  items.owner AS owner,
+				  items.extadm AS extadm,
                   (purchasedate+warrantymonths*30*24*60*60-$t)/(60*60*24) AS remdays,
                   coalesce(racks.label,'') || ' ' || coalesce(racks.usize,'') || ' ' || coalesce(racks.model,'') AS rackinfo,
+				  items.admlogin AS admlogin,
+				  items.admloginsc AS admloginsc,
+				  items.pubip AS pubip,
                   (SELECT group_concat( tags.name ,',') from tags,tag2item WHERE tag2item.itemid=items.id AND tags.id=tag2item.tagid) AS taginfo,
                   (SELECT group_concat( software.stitle ,'|') from software,item2soft WHERE item2soft.itemid=items.id AND software.id=item2soft.softid) AS softinfo
-                  FROM
+          FROM
                   items
 		  JOIN itemtypes ON items.itemtypeid=itemtypes.id 
 		  JOIN agents ON items.manufacturerid=agents.id
@@ -159,25 +165,32 @@
 
 	$sQuery = "
 		  SELECT 
-		  items.id AS itemid,
-		  itemtypes.typedesc as typedesc, 
+				  items.id AS itemid,
+				  itemtypes.typedesc as typedesc, 
                   agents.title,
                   items.model as itemmodel,
                   dnsname,
                   items.label as itemlabel,
                   purchasedate,
                   users.username,
+				  items.owner AS owner,
+  				  items.extadm AS extadm,
                   statustypes.statusdesc,
                   locations.name as locationname,
                   locareas.areaname,
                   coalesce(sn,'') || ' ' || coalesce(sn2,'') || ' ' || coalesce(sn3,'') AS serial,
+				  items.umdecal AS umdecal,
+				  items.ipv4 AS ipv4,
                   (purchasedate+warrantymonths*30*24*60*60-$t)/(60*60*24) AS remdays,
                   coalesce(racks.label,'') || ' ' || coalesce(racks.usize,'') || ' ' || coalesce(racks.model,'') AS rackinfo,
                   (SELECT group_concat( tags.name ,', ') FROM tags,tag2item WHERE tag2item.itemid=items.id AND tags.id=tag2item.tagid) AS taginfo,
                   (SELECT group_concat( software.stitle ,',') FROM software,item2soft WHERE item2soft.itemid=items.id and software.id=item2soft.softid) AS softinfo,
+				  items.admlogin AS admlogin,
+				  items.admloginsc AS admloginsc,
+				  items.pubip AS pubip,
                   purchprice,
-                  macs, ipv4, ipv6, remadmip
-                  FROM
+                  macs, ipv6, remadmip
+          FROM
                   items
 		  JOIN itemtypes ON items.itemtypeid=itemtypes.id 
 		  JOIN agents ON items.manufacturerid=agents.id

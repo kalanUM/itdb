@@ -82,18 +82,24 @@ $(document).ready(function() {
 <th><?php te("Model");?></th>
 <th><?php te("DnsName");?></th>
 <th><?php te("S/N");?></th>
+<th><?php te("UM Decal");?></th>
+<th><?php te("IPv4");?></th>
 <th><?php te("PurchaseDate");?></th>
 <th><?php te("Warr. Rem. days");?></th>
 <th><?php te("User");?></th>
+<th><?php te("Ext. Admin");?></th> 
+<th><?php te("Owner");?></th>
 <th><?php te("Status");?></th>
 <th><?php te("Location");?></th>
 <th><?php te("Area");?></th>
 <th><?php te("Rack");?></th>
 <th><?php te("PurchPrice");?></th>
 <th><?php te("MACs");?></th>
-<th><?php te("IPv4");?></th>
 <th><?php te("IPv6");?></th>
 <th><?php te("RemAdmIP");?></th>
+<th><?php te("Login");?></th>
+<th><?php te("LoginSC");?></th>
+<th><?php te("Public IP");?></th>
 <th><?php te("Tags");?></th>
 <th><?php te("Software");?></th>
 </tr>
