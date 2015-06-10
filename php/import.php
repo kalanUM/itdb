@@ -470,7 +470,7 @@ if ($nextstep==2) {
 		$cpuno=intval($cols[$name2fno['cpuno']]);
 		$remadmip=$cols[$name2fno['remadmip']];
         $rackid=getrackidbyname($cols[$name2fno['rack']]);
-		$rackposition=$cols[$name2fno['rackposition']];
+		$rackposition=intval($cols[$name2fno['rackposition']]);
 		$usize=intval($cols[$name2fno['usize']]);
 		$rackposdepth=7;
 
