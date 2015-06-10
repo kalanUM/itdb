@@ -36,6 +36,15 @@ $fno2name=array(
 /*18 - lookup*/ 'rack',
 /*19*/	 'rackposition',
 /*20*/	 'usize',
+
+/*21*/          'umdecal',
+/*22*/          'admlogin',
+/*23*/          'admloginsc',
+/*24*/          'pubip',
+/*25*/          'hdtypes',
+/*26*/          'owner',
+/*27*/          'extadm',
+
 );
 
 $name2fno=array_flip($fno2name);
@@ -473,13 +482,22 @@ if ($nextstep==2) {
 		$rackposition=intval($cols[$name2fno['rackposition']]);
 		$usize=intval($cols[$name2fno['usize']]);
 		$rackposdepth=7;
+		
+		$umdecal=$cols[$name2fno['umdecal']];
+		$admlogin=$cols[$name2fno['admlogin']];
+		$admloginsc=$cols[$name2fno['admloginsc']];
+		$pubip=$cols[$name2fno['pubip']]; 
+		$hdtypes=$cols[$name2fno['hdtypes']]; 
+		$owner=$cols[$name2fno['owner']];  
+		$extadm=$cols[$name2fno['extadm']];
+
 
 
 
 		$sql="INSERT into items ".
-             "(userid,ipv4,dnsname,comments,manufacturerid,model,sn,ispart,rackmountable,itemtypeid,status,locationid,locareaid,label,function,cpu,ram,hd,cpuno,remadmip,rackid,rackposition,usize,rackposdepth) ".
+             "(userid,ipv4,dnsname,comments,manufacturerid,model,sn,ispart,rackmountable,itemtypeid,status,locationid,locareaid,label,function,cpu,ram,hd,cpuno,remadmip,rackid,rackposition,usize,rackposdepth, umdecal, admlogin, admloginsc, pubip, hdtypes, owner, extadm) ".
              " VALUES ".
-             "(:userid,:ipv4,:dnsname,:comments,:manufacturerid,:model,:sn,:ispart,:rackmountable,:itemtypeid,:status,:locationid,:locareaid,:label,:function,:cpu,:ram,:hd,:cpuno,:remadmip,:rackid,:rackposition,:usize,:rackposdepth)";
+             "(:userid,:ipv4,:dnsname,:comments,:manufacturerid,:model,:sn,:ispart,:rackmountable,:itemtypeid,:status,:locationid,:locareaid,:label,:function,:cpu,:ram,:hd,:cpuno,:remadmip,:rackid,:rackposition,:usize,:rackposdepth, :umdecal, :admlogin, :admloginsc, :pubip, :hdtypes, :owner, :extadm)";
 
         $stmt=db_execute2($dbh,$sql,
             array(
@@ -507,6 +525,15 @@ if ($nextstep==2) {
 		    'rackposition'=>$rackposition,
             'usize'=>$usize,
 			'rackposdepth'=>$rackposdepth,
+			
+	        'umdecal'=>$umdecal,
+            'admlogin'=>$admlogin,
+            'admloginsc'=>$admloginsc,
+            'pubip'=>$pubip,
+            'hdtypes'=>$hdtypes,
+            'owner'=>$owner,
+            'extadm'=>$extadm,
+
             )
         );
 		 //echo "<br>Isql=$sql<br>";
