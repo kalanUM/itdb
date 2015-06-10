@@ -34,6 +34,8 @@ $fno2name=array(
 /*16*/   'cpuno',
 /*17*/	 'remadmip',
 /*18 - lookup*/ 'rack',
+/*19*/	 'rackposition',
+/*20*/	 'usize',
 );
 
 $name2fno=array_flip($fno2name);
@@ -457,7 +459,7 @@ if ($nextstep==2) {
 		$model=trim($cols[$name2fno['model']]);
 		$sn=trim($cols[$name2fno['sn']]);
         $ispart=0;
-        $rackmountable=0;
+        $rackmountable=1;
 		$itemtypeid=getitemtypeidbyname($cols[$name2fno['itemtype']]);
 		$status=getstatustypeidbyname($cols[$name2fno['status']]);
         $label=trim($cols[$name2fno['label']]);
@@ -468,14 +470,16 @@ if ($nextstep==2) {
 		$cpuno=intval($cols[$name2fno['cpuno']]);
 		$remadmip=$cols[$name2fno['remadmip']];
         $rackid=getrackidbyname($cols[$name2fno['rack']]);
-
+		$rackposition=$cols[$name2fno['rackposition']];
+		$usize=intval($cols[$name2fno['usize']]);
+		$rackposdepth=7;
 
 
 
 		$sql="INSERT into items ".
-             "(userid,ipv4,dnsname,comments,manufacturerid,model,sn,ispart,rackmountable,itemtypeid,status,locationid,locareaid,label,function,cpu,ram,hd,cpuno,remadmip,rackid) ".
+             "(userid,ipv4,dnsname,comments,manufacturerid,model,sn,ispart,rackmountable,itemtypeid,status,locationid,locareaid,label,function,cpu,ram,hd,cpuno,remadmip,rackid,rackposition,usize,rackposdepth) ".
              " VALUES ".
-             "(:userid,:ipv4,:dnsname,:comments,:manufacturerid,:model,:sn,:ispart,:rackmountable,:itemtypeid,:status,:locationid,:locareaid,:label,:function,:cpu,:ram,:hd,:cpuno,:remadmip,:rackid)";
+             "(:userid,:ipv4,:dnsname,:comments,:manufacturerid,:model,:sn,:ispart,:rackmountable,:itemtypeid,:status,:locationid,:locareaid,:label,:function,:cpu,:ram,:hd,:cpuno,:remadmip,:rackid,:rackposition,:usize,:rackposdepth)";
 
         $stmt=db_execute2($dbh,$sql,
             array(
@@ -500,6 +504,9 @@ if ($nextstep==2) {
 			'cpuno'=>$cpuno,
 			'remadmip'=>$remadmip,
 			'rackid'=>$rackid,
+		    'rackposition'=>$rackposition,
+            'usize'=>$usize,
+			'rackposdepth'=>$rackposdepth,
             )
         );
 		 //echo "<br>Isql=$sql<br>";
