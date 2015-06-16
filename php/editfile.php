@@ -393,7 +393,8 @@ else
     </h3></td></tr>
     <!-- file upload -->
     <tr> 
-      <td class="tdt">File:</td> <td><input validate='required:true' name="file" id="file" size="25" type="file"></td>
+      <!-- <td class="tdt">File:</td> <td><input validate='required:true' name="file" id="file" size="25" type="file"></td> -->
+	  <td class="tdt">File:</td> <td><input validate='required:false' name="file" id="file" size="25" type="file"></td>
     </tr>
     </table>
 <?php echo $tip?>
